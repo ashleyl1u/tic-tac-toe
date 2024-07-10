@@ -48,6 +48,7 @@ const gameController = (() => {
       player2 = player('o', name2);
       document.getElementById('form').reset();
       displayController.closeOverlay();
+      displayController.updateGameMessage(`${getCurrentPlayer().getName()} turn`)
     }
     else{
       if(name1 === ''){
@@ -60,6 +61,7 @@ const gameController = (() => {
   });
 
 
+
   
 
 
@@ -70,20 +72,25 @@ const gameController = (() => {
   } 
 
   const playRound = (moveIndex) => {
-    console.log(getCurrentPlayer());
-    gameBoard.setField(moveIndex, getCurrentPlayer().getSign());
-    displayController.updateBoard();
-    
-
-    if(checkWin(moveIndex) || checkDraw()){
-      gameOver = true;
+    if(!isGameOver()){
+      gameBoard.setField(moveIndex, getCurrentPlayer().getSign());
+      displayController.updateBoard();
+      
+  
+      if(checkWin(moveIndex)){
+        displayController.updateGameMessage(`${getCurrentPlayer().getName()} Wins!` );
+        gameOver=true;
+  
+      }
+      else if (checkDraw()){
+        displayController.updateGameMessage(`Draw!`);
+        gameOver=true;
+      }
+      else{
+        round++;
+        displayController.updateGameMessage(`${getCurrentPlayer().getName()} turn`);
+      }
     }
-    else{
-      round++;
-      displayController.updateGameMessage(`${getCurrentPlayer().getName()} turn`);
-    }
-    
-    isGameOver()
   }
 
   const checkWin = (moveIndex) => {
