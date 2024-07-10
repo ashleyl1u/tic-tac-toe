@@ -1,10 +1,14 @@
 
 
-function player (sign)  {
+function player (sign, name)  {
   const getSign = () => {
     return sign;
   }
-  return {sign, getSign}
+
+  const getName = () => {
+    return name;
+  }
+  return {getSign, getName}
 }
 
 
@@ -28,27 +32,58 @@ const gameBoard = (() =>  {
 
 
 const gameController = (() => {
-  const player1 = player('x');
-  const player2 = player('o');
+
+  let player1;
+  let player2;
   let round = 1;
   let gameOver = false;
 
+  document.getElementById('form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name1 = document.getElementById('player-1').value;
+    const name2 = document.getElementById('player-2').value;
+
+    if(name1 !== '' && name2 !== ''){
+      player1 = player('x', name1);
+      player2 = player('o', name2);
+      document.getElementById('form').reset();
+      displayController.closeOverlay();
+    }
+    else{
+      if(name1 === ''){
+        displayController.updateErrorMessage(document.getElementById('error-msg-player-1'));
+      }
+      if(name2 === ''){
+        displayController.updateErrorMessage(document.getElementById('error-msg-player-2'));
+      }
+    }
+  });
+
+
+  
+
+
+
   
   const getCurrentPlayer = () => {
-    return round%2===0 ? player2.getSign() : player1.getSign();
+    return round%2===0 ? player2 : player1;
   } 
 
   const playRound = (moveIndex) => {
-    gameBoard.setField(moveIndex, getCurrentPlayer());
+    console.log(getCurrentPlayer());
+    gameBoard.setField(moveIndex, getCurrentPlayer().getSign());
     displayController.updateBoard();
+    
 
     if(checkWin(moveIndex) || checkDraw()){
       gameOver = true;
     }
     else{
       round++;
+      displayController.updateGameMessage(`${getCurrentPlayer().getName()} turn`);
     }
     
+    isGameOver()
   }
 
   const checkWin = (moveIndex) => {
@@ -70,7 +105,7 @@ const gameController = (() => {
     return winPossibilities
     .filter(possibilities => possibilities.includes(moveIndex))
     .some(possibilities => possibilities.every(index => 
-      gameBoard.getField(index) === getCurrentPlayer()
+      gameBoard.getField(index) === getCurrentPlayer().getSign()
     ));
   }
 
@@ -84,7 +119,7 @@ const gameController = (() => {
   }
 
 
-  return {playRound, isGameOver};
+  return {playRound, getCurrentPlayer};
 
 })();
 
@@ -101,8 +136,8 @@ const displayController = (() =>{
     });
   });
 
-  const updateBoard = () => {
 
+  const updateBoard = () => {
     for(let i =0; i<gameBoard.board.length ; i++){
       if(gameBoard.getField(i) !== ''){
         document.getElementById(`${i}`).textContent = gameBoard.getField(i);
@@ -110,8 +145,28 @@ const displayController = (() =>{
     }
   }
 
+  const updateGameMessage = (message) => {
+    document.getElementById('game-messages').textContent = message;
+  }
+
+
+  //error handling
+  const updateErrorMessage = (element) => {
+    element.textContent = '*Field Required';
+  }
+
+  document.querySelectorAll('.input').forEach((input) => {
+    input.addEventListener('focus', () => {
+      document.getElementById(`error-msg-${input.getAttribute('id')}`).textContent = '';
+    })
+  })
+
+  const closeOverlay = () => {
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('form-container').style.display = 'none';
+  }
   
-  return {updateBoard};
+  return {updateBoard, updateGameMessage, updateErrorMessage, closeOverlay};
 
 })();
 

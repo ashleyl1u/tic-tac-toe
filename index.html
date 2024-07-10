@@ -8,7 +8,12 @@
 </head>
 <body>
 
+  <div class="game-message-container">
+    <div id="game-messages"></div>
+  </div>
+  
   <div id="board-container">
+
     <div id="board">
       <div class="cell" id="0"></div>
       <div class="cell" id="1"></div>
@@ -22,6 +27,21 @@
   
     </div>
   </div>
+  <div id="form-container">
+    <form id="form">
+      <label for="player-1">Player 1 Name</label>
+      <input type="text" id="player-1" placeholder="player 1 name" class="input">
+      <h6 id="error-msg-player-1"  class="error-msg"></h6>
+  
+      <label for="player-2">Player 2 Name</label>
+      <input type="text" id="player-2" placeholder="player 2 name" class="input">
+      <h6 id="error-msg-player-2" class="error-msg"></h6>
+  
+      <button >Start Game</button>
+    </form>
+  </div>
+  
+  <div id="overlay"></div>
   
   
   <script src="./main.js"></script>
