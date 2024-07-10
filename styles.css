@@ -1,0 +1,37 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+
+:root{
+  --board-border-color: black;
+}
+
+#board-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+#board{
+  display: grid;
+  grid-template-columns: 100px 100px 100px;
+  grid-template-rows: 100px 100px 100px;
+  height: 300px;
+  width: 300px;
+  border: 1px solid var(--board-border-color);
+}
+
+
+#board div{
+  border: 2px solid var(--board-border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 70px;
+}
+
+
