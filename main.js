@@ -9,7 +9,7 @@ function player (sign)  {
 
 
 const gameBoard = (() =>  {
-  const board = ['-','-','-','-','-','-','-','-','-'];
+  const board = ['','','','','','','','',''];
 
 
   const setField = (index, playerSign) => {
@@ -40,7 +40,8 @@ const gameController = (() => {
 
   const playRound = (moveIndex) => {
     gameBoard.setField(moveIndex, getCurrentPlayer());
-    console.log(checkWin(moveIndex) , checkDraw());
+    displayController.updateBoard();
+
     if(checkWin(moveIndex) || checkDraw()){
       gameOver = true;
     }
@@ -66,10 +67,6 @@ const gameController = (() => {
     //some --> returns true if at least one of the possible wins are true
     //every iterates through a win possibility and checks if the related fields are selected by the player
 
-    console.log(moveIndex);
-    console.log(typeof(moveIndex))
-    console.log(winPossibilities
-      .filter(possibilities => possibilities.includes(moveIndex)));
     return winPossibilities
     .filter(possibilities => possibilities.includes(moveIndex))
     .some(possibilities => possibilities.every(index => 
@@ -93,7 +90,38 @@ const gameController = (() => {
 
 
 const displayController = (() =>{
-  /*
+  
+
+  document.querySelectorAll('.cell').forEach((cell) => {
+    cell.addEventListener('click', () => {
+      if(cell.textContent === ''){
+        const index = cell.getAttribute('id');
+        gameController.playRound(Number(index));
+      }
+    });
+  });
+
+  const updateBoard = () => {
+
+    for(let i =0; i<gameBoard.board.length ; i++){
+      if(gameBoard.getField(i) !== ''){
+        document.getElementById(`${i}`).textContent = gameBoard.getField(i);
+      }
+    }
+  }
+
+  
+  return {updateBoard};
+
+})();
+
+
+
+
+
+
+
+/*
   const displayBoard = () =>{
     let row = '';
     for(let i =0; i<gameBoard.board.length ; i++){
@@ -110,10 +138,6 @@ const displayController = (() =>{
   return {displayBoard};
 
   */
-})();
-
-
-
 
 
 /*

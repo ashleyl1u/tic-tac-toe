@@ -26,12 +26,13 @@
 }
 
 
-#board div{
+.cell{
   border: 2px solid var(--board-border-color);
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 70px;
+  cursor: pointer;
 }
 
 
