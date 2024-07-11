@@ -5,16 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>tic-tac-toe</title>
   <link rel="stylesheet" href="./styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <div class="game-message-container">
-    <div id="player-1-info">
+    <div id="player-1-info" class="info">
       <h3 id="player-1-name"></h3>
       <h4 id="player-1-score"></h4>
     </div>
     <div id="game-messages"></div>
-    <div id="player-2-info">
+    <div id="player-2-info" class="info">
       <h3 id="player-2-name"></h3>
       <h4 id="player-2-score"></h4>
     </div>
@@ -36,7 +39,7 @@
     </div>
   </div>
 
-  <div>
+  <div id="round-over-container">
     <button id="new-round">New Round</button>
     <button id="new-game">New Game</button>
   </div>
@@ -44,13 +47,19 @@
 
   <div id="form-container">
     <form id="form">
-      <label for="player-1">Player 1 Name</label>
-      <input type="text" id="player-1-input" placeholder="player 1 name" class="input">
-      <h6 id="error-msg-player-1-input"  class="error-msg"></h6>
+      <li>
+        <label for="player-1">Enter Player 1 Name:</label>
+        <input type="text" id="player-1-input" placeholder="Name" class="input">
+        <h6 id="error-msg-player-1-input"  class="error-msg"></h6>
+      </li>
+      
+      <li>
+        <label for="player-2">Enter Player 2 Name:</label>
+        <input type="text" id="player-2-input" placeholder="Name" class="input">
+        <h6 id="error-msg-player-2-input" class="error-msg"></h6>
+      </li>
   
-      <label for="player-2">Player 2 Name</label>
-      <input type="text" id="player-2-input" placeholder="player 2 name" class="input">
-      <h6 id="error-msg-player-2-input" class="error-msg"></h6>
+      
   
       <button >Start Game</button>
     </form>

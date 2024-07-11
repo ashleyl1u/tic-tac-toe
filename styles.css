@@ -1,11 +1,13 @@
 *{
   margin: 0;
   padding: 0;
+  font-family: "Nunito", 'Times New Roman';
 }
 
 
 :root{
   --board-border-color: black;
+  --overlay-background-color: white;
 }
 
 #board-container{
@@ -35,13 +37,7 @@
 }
 
 
-.game-message-container{
-  display:flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
+
 
 #overlay{
   display: block;
@@ -50,7 +46,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(93, 93, 93, 0.7); /* Semi-transparent black background */
+  background-color: rgba(0,0,0, 0.7); /* Semi-transparent black background */
    /* Ensure it's above other content */
   z-index: 1000;
 }
@@ -63,8 +59,78 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-color: var(--overlay-background-color);
+
 }
 
 #form{
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+}
+
+#form li{
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+#form input{
+  outline: grey solid 1px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-top: 3px;
+}
+
+
+#form input:focus{
+  outline: black solid 2px;
+  border: none;
+
+}
+
+#form button{
+  padding: 7px 10px;
+  border-radius: 5px;
+  border: none;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.error-msg {
+  color: red;
+}
+
+
+.game-message-container{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+  padding: 30px;
+}
+
+.game-message-container .info{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#round-over-container{
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+  gap: 15px;
+}
+
+
+#round-over-container button{
+  padding: 5px 10px;
+  border-radius: 5px;
+
+  border: 1px solid black;
+  cursor: pointer;
 }
