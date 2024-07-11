@@ -1,6 +1,17 @@
 
 
-function player (sign, name)  {
+function player (sign, name, id)  {
+
+  let score =0;
+
+  const updateScore = () => {
+    score++;
+  }
+
+  const getScore = () => {
+    return score;
+  }
+
   const getSign = () => {
     return sign;
   }
@@ -8,7 +19,11 @@ function player (sign, name)  {
   const getName = () => {
     return name;
   }
-  return {getSign, getName}
+
+  const getId = () => {
+    return id;
+  }
+  return {getSign, getName, getId, updateScore, getScore}
 }
 
 
@@ -41,29 +56,44 @@ const gameController = (() => {
 
   let player1;
   let player2;
-  let round = 1;
-  let gameOver = false;
-  let game =1;
+  let round;;
+  let gameOver;
+  let game;
 
 
   document.getElementById('form').addEventListener('submit', (e) => {
     e.preventDefault();
-    const name1 = document.getElementById('player-1').value;
-    const name2 = document.getElementById('player-2').value;
+    const name1 = document.getElementById('player-1-input').value;
+    const name2 = document.getElementById('player-2-input').value;
 
     if(name1 !== '' && name2 !== ''){
-      player1 = player('x', name1);
-      player2 = player('o', name2);
+      player1 = player('x', name1, '1');
+      player2 = player('o', name2, '2');
+      round =1;
+      gameOver=false;
+      game=1;
+
+      gameBoard.resetBoard();
+      displayController.updateBoard();
+
+      displayController.displayPlayerName(player1);
+      displayController.displayPlayerName(player2);
+
+      displayController.updatePlayerScore(player1);
+      displayController.updatePlayerScore(player2);
+
+
       document.getElementById('form').reset();
       displayController.closeOverlay();
-      displayController.updateGameMessage(`${getCurrentPlayer().getName()} turn`)
+      displayController.updateGameMessage(`${getCurrentPlayer().getName()} turn`);
+      
     }
     else{
       if(name1 === ''){
-        displayController.updateErrorMessage(document.getElementById('error-msg-player-1'));
+        displayController.updateErrorMessage(document.getElementById('error-msg-player-1-input'));
       }
       if(name2 === ''){
-        displayController.updateErrorMessage(document.getElementById('error-msg-player-2'));
+        displayController.updateErrorMessage(document.getElementById('error-msg-player-2-input'));
       }
     }
   });
@@ -82,6 +112,10 @@ const gameController = (() => {
     round = 1;
   }
 
+
+  document.getElementById('new-game').addEventListener('click', () => {
+    displayController.openOverlay();
+  });
   
 
 
@@ -106,6 +140,8 @@ const gameController = (() => {
       if(checkWin(moveIndex)){
         displayController.updateGameMessage(`${getCurrentPlayer().getName()} Wins!` );
         gameOver=true;
+        getCurrentPlayer().updateScore();
+        displayController.updatePlayerScore(getCurrentPlayer());
   
       }
       else if (checkDraw()){
@@ -180,6 +216,13 @@ const displayController = (() =>{
     document.getElementById('game-messages').textContent = message;
   }
 
+  const displayPlayerName = (player) => {
+    document.getElementById(`player-${player.getId()}-name`).textContent = player.getName();
+  }
+  const updatePlayerScore = (player) => {
+    document.getElementById(`player-${player.getId()}-score`).textContent = player.getScore();
+  }
+
 
   //error handling
   const updateErrorMessage = (element) => {
@@ -196,8 +239,13 @@ const displayController = (() =>{
     document.getElementById('overlay').style.display = 'none';
     document.getElementById('form-container').style.display = 'none';
   }
+
+  const openOverlay = () => {
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('form-container').style.display = 'flex';
+  }
   
-  return {updateBoard, updateGameMessage, updateErrorMessage, closeOverlay};
+  return {updateBoard, updateGameMessage, updateErrorMessage, closeOverlay, openOverlay, displayPlayerName, updatePlayerScore};
 
 })();
 

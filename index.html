@@ -9,7 +9,15 @@
 <body>
 
   <div class="game-message-container">
+    <div id="player-1-info">
+      <h3 id="player-1-name"></h3>
+      <h4 id="player-1-score">0</h4>
+    </div>
     <div id="game-messages"></div>
+    <div id="player-2-info">
+      <h3 id="player-2-name"></h3>
+      <h4 id="player-2-score">0</h4>
+    </div>
   </div>
   
   <div id="board-container">
@@ -30,19 +38,19 @@
 
   <div>
     <button id="new-round">New Round</button>
-    <button >New Game</button>
+    <button id="new-game">New Game</button>
   </div>
 
 
   <div id="form-container">
     <form id="form">
       <label for="player-1">Player 1 Name</label>
-      <input type="text" id="player-1" placeholder="player 1 name" class="input">
-      <h6 id="error-msg-player-1"  class="error-msg"></h6>
+      <input type="text" id="player-1-input" placeholder="player 1 name" class="input">
+      <h6 id="error-msg-player-1-input"  class="error-msg"></h6>
   
       <label for="player-2">Player 2 Name</label>
-      <input type="text" id="player-2" placeholder="player 2 name" class="input">
-      <h6 id="error-msg-player-2" class="error-msg"></h6>
+      <input type="text" id="player-2-input" placeholder="player 2 name" class="input">
+      <h6 id="error-msg-player-2-input" class="error-msg"></h6>
   
       <button >Start Game</button>
     </form>
