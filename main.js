@@ -82,7 +82,7 @@ const gameController = (() => {
     displayController.updatePlayerScore(player1);
     displayController.updatePlayerScore(player2);
 
-    displayController.updateGameMessage(`${getCurrentPlayer().getName()} turn`);
+    displayController.updateGameMessage(`${getCurrentPlayer().getName()}'s turn`);
 
 
     formElement.reset();
@@ -173,7 +173,7 @@ const gameController = (() => {
       }
       else{
         round++;
-        displayController.updateGameMessage(`${getCurrentPlayer().getName()} turn`);
+        displayController.updateGameMessage(`${getCurrentPlayer().getName()}'s turn`);
       }
     }
   }
