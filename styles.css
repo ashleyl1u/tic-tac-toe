@@ -120,7 +120,7 @@
 }
 
 #round-over-container{
-  display: flex;
+  display: none;
   justify-content: center;
   margin-top: 100px;
   gap: 15px;

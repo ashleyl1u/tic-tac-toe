@@ -118,6 +118,7 @@ const gameController = (() => {
 
   document.getElementById('new-round').addEventListener('click', () => {
     newRound();
+    displayController.hideGameOverButtons();
   })
 
   const newRound = () => {
@@ -133,6 +134,7 @@ const gameController = (() => {
 
   document.getElementById('new-game').addEventListener('click', () => {
     displayController.openOverlay();
+    displayController.hideGameOverButtons();
   });
   
 
@@ -160,15 +162,18 @@ const gameController = (() => {
         gameOver=true;
 
         displayController.updateGameMessage(`${getCurrentPlayer().getName()} Wins!` );
+        displayController.displayGameOverButtons();
       
         getCurrentPlayer().updateScore();
         displayController.updatePlayerScore(getCurrentPlayer());
+
   
       }
       else if (checkDraw()){
         gameOver=true;
-
         displayController.updateGameMessage(`Draw!`);
+        displayController.displayGameOverButtons();
+
         
       }
       else{
@@ -248,6 +253,15 @@ const displayController = (() =>{
   }
 
 
+  const displayGameOverButtons = () => {
+    document.getElementById('round-over-container').style.display = 'flex';
+  }
+
+  const hideGameOverButtons = () => {
+    document.getElementById('round-over-container').style.display = 'none';
+  }
+
+
   //error handling
   const updateErrorMessage = (element) => {
     element.textContent = '*Field Required';
@@ -271,7 +285,7 @@ const displayController = (() =>{
     document.getElementById('form-container').style.display = 'flex';
   }
   
-  return {updateBoard, updateGameMessage, updateErrorMessage, closeOverlay, openOverlay, displayPlayerName, updatePlayerScore};
+  return {updateBoard, updateGameMessage, updateErrorMessage, closeOverlay, openOverlay, displayPlayerName, updatePlayerScore, displayGameOverButtons, hideGameOverButtons};
 
 })();
 
