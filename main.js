@@ -54,38 +54,53 @@ const gameBoard = (() =>  {
 
 const gameController = (() => {
 
+
+  const formElement = document.getElementById('form');
+
   let player1;
   let player2;
-  let round;;
+  let round;
   let gameOver;
   let game;
 
+  const setupNewGame = (name1, name2) => {
+    player1 = player('x', name1, '1');
+    player2 = player('o', name2, '2');
+    round =1;
+    gameOver=false;
+    game=1;
+    gameBoard.resetBoard();
+  }
 
-  document.getElementById('form').addEventListener('submit', (e) => {
+  const renderNewGame = () => {
+    displayController.updateBoard();
+
+    displayController.displayPlayerName(player1);
+    displayController.displayPlayerName(player2);
+
+    displayController.updatePlayerScore(player1);
+    displayController.updatePlayerScore(player2);
+
+    displayController.updateGameMessage(`${getCurrentPlayer().getName()} turn`);
+
+
+    formElement.reset();
+    displayController.closeOverlay();
+  }
+
+
+
+
+  formElement.addEventListener('submit', (e) => {
     e.preventDefault();
     const name1 = document.getElementById('player-1-input').value;
     const name2 = document.getElementById('player-2-input').value;
 
     if(name1 !== '' && name2 !== ''){
-      player1 = player('x', name1, '1');
-      player2 = player('o', name2, '2');
-      round =1;
-      gameOver=false;
-      game=1;
-
-      gameBoard.resetBoard();
-      displayController.updateBoard();
-
-      displayController.displayPlayerName(player1);
-      displayController.displayPlayerName(player2);
-
-      displayController.updatePlayerScore(player1);
-      displayController.updatePlayerScore(player2);
-
-
-      document.getElementById('form').reset();
-      displayController.closeOverlay();
-      displayController.updateGameMessage(`${getCurrentPlayer().getName()} turn`);
+      
+      setupNewGame();
+      renderNewGame();
+      
       
     }
     else{
@@ -105,11 +120,12 @@ const gameController = (() => {
 
   const newRound = () => {
     game++;
+    gameOver = false;
+    round = 1;
     gameBoard.resetBoard();
     displayController.updateBoard();
     displayController.updateGameMessage(`${getCurrentPlayer().getName()} turn`);
-    gameOver = false;
-    round = 1;
+    
   }
 
 
@@ -138,15 +154,20 @@ const gameController = (() => {
       
   
       if(checkWin(moveIndex)){
-        displayController.updateGameMessage(`${getCurrentPlayer().getName()} Wins!` );
+
         gameOver=true;
+
+        displayController.updateGameMessage(`${getCurrentPlayer().getName()} Wins!` );
+      
         getCurrentPlayer().updateScore();
         displayController.updatePlayerScore(getCurrentPlayer());
   
       }
       else if (checkDraw()){
-        displayController.updateGameMessage(`Draw!`);
         gameOver=true;
+
+        displayController.updateGameMessage(`Draw!`);
+        
       }
       else{
         round++;
@@ -166,10 +187,6 @@ const gameController = (() => {
       [1,4,7],
       [2,5,8]
     ]
-    
-    //filter --> returns possible wins related to the players recent move
-    //some --> returns true if at least one of the possible wins are true
-    //every iterates through a win possibility and checks if the related fields are selected by the player
 
     return winPossibilities
     .filter(possibilities => possibilities.includes(moveIndex))
@@ -188,7 +205,7 @@ const gameController = (() => {
   }
 
 
-  return {playRound, getCurrentPlayer};
+  return {playRound};
 
 })();
 
@@ -206,19 +223,24 @@ const displayController = (() =>{
   });
 
 
+  //display board
   const updateBoard = () => {
     for(let i =0; i<gameBoard.board.length ; i++){
       document.getElementById(`${i}`).textContent = gameBoard.getField(i);
     }
   }
 
+  //display game message
   const updateGameMessage = (message) => {
     document.getElementById('game-messages').textContent = message;
   }
 
+  //display player name
   const displayPlayerName = (player) => {
     document.getElementById(`player-${player.getId()}-name`).textContent = player.getName();
   }
+
+  //display player score
   const updatePlayerScore = (player) => {
     document.getElementById(`player-${player.getId()}-score`).textContent = player.getScore();
   }
@@ -235,6 +257,8 @@ const displayController = (() =>{
     })
   })
 
+
+  //overlay
   const closeOverlay = () => {
     document.getElementById('overlay').style.display = 'none';
     document.getElementById('form-container').style.display = 'none';
@@ -252,47 +276,3 @@ const displayController = (() =>{
 
 
 
-
-
-
-/*
-  const displayBoard = () =>{
-    let row = '';
-    for(let i =0; i<gameBoard.board.length ; i++){
-      row += gameBoard.board[i]+ ' ';
-      if(i ===2 || i===5 || i===8){
-        console.log(row);
-        row='';
-      }
-      
-    }
-    
-  }
-
-  return {displayBoard};
-
-  */
-
-
-/*
-
-while(gameController.isGameOver() === false){
-  displayController.displayBoard();
-  gameController.playRound(Number(prompt("Enter your move")));
-  //console.log(gameController.isGameOver());
-}
-
-console.log('game over');
-
-displayController.displayBoard();
-gameController.playRound(0);
-displayController.displayBoard();
-gameController.playRound(2);
-displayController.displayBoard();
-gameController.playRound(3);
-displayController.displayBoard();
-gameController.playRound(4);
-displayController.displayBoard();
-gameController.playRound(6);
-displayController.displayBoard();
-*/
