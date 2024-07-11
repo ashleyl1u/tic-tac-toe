@@ -70,6 +70,7 @@ const gameController = (() => {
     gameOver=false;
     game=1;
     gameBoard.resetBoard();
+
   }
 
   const renderNewGame = () => {
@@ -96,9 +97,10 @@ const gameController = (() => {
     const name1 = document.getElementById('player-1-input').value;
     const name2 = document.getElementById('player-2-input').value;
 
+
     if(name1 !== '' && name2 !== ''){
       
-      setupNewGame();
+      setupNewGame(name1, name2);
       renderNewGame();
       
       
