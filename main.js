@@ -24,7 +24,13 @@ const gameBoard = (() =>  {
     return board[index];
   }
 
-  return {board, setField , getField};
+  const resetBoard = () => {
+    for(let i =0; i<board.length; i++){
+      board[i] = '';
+    }
+  }
+
+  return {board, setField , getField, resetBoard};
 
 })();
 
@@ -37,6 +43,8 @@ const gameController = (() => {
   let player2;
   let round = 1;
   let gameOver = false;
+  let game =1;
+
 
   document.getElementById('form').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -61,6 +69,18 @@ const gameController = (() => {
   });
 
 
+  document.getElementById('new-round').addEventListener('click', () => {
+    newRound();
+  })
+
+  const newRound = () => {
+    game++;
+    gameBoard.resetBoard();
+    displayController.updateBoard();
+    displayController.updateGameMessage(`${getCurrentPlayer().getName()} turn`);
+    gameOver = false;
+    round = 1;
+  }
 
   
 
@@ -68,7 +88,13 @@ const gameController = (() => {
 
   
   const getCurrentPlayer = () => {
-    return round%2===0 ? player2 : player1;
+    if(game %2 !== 0){
+      return round%2===0 ? player2 : player1;
+    }
+    else{
+      return round%2===0 ? player1 : player2;
+    }
+    
   } 
 
   const playRound = (moveIndex) => {
@@ -146,9 +172,7 @@ const displayController = (() =>{
 
   const updateBoard = () => {
     for(let i =0; i<gameBoard.board.length ; i++){
-      if(gameBoard.getField(i) !== ''){
-        document.getElementById(`${i}`).textContent = gameBoard.getField(i);
-      }
+      document.getElementById(`${i}`).textContent = gameBoard.getField(i);
     }
   }
 
