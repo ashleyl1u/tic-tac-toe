@@ -277,12 +277,12 @@ const displayController = (() =>{
   //overlay
   const closeOverlay = () => {
     document.getElementById('overlay').style.display = 'none';
-    document.getElementById('form-container').style.display = 'none';
+    //document.getElementById('form-container').style.display = 'none';
   }
 
   const openOverlay = () => {
     document.getElementById('overlay').style.display = 'block';
-    document.getElementById('form-container').style.display = 'flex';
+    //document.getElementById('form-container').style.display = 'flex';
   }
   
   return {updateBoard, updateGameMessage, updateErrorMessage, closeOverlay, openOverlay, displayPlayerName, updatePlayerScore, displayGameOverButtons, hideGameOverButtons};
