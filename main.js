@@ -33,6 +33,7 @@ const gameBoard = (() =>  {
 
   const setField = (index, playerSign) => {
     board[index]=playerSign;
+    document.getElementById(`${index}`).classList.add(playerSign);
   }
 
   const getField = (index) => {
@@ -42,6 +43,8 @@ const gameBoard = (() =>  {
   const resetBoard = () => {
     for(let i =0; i<board.length; i++){
       board[i] = '';
+      document.getElementById(`${i}`).classList.remove('x');
+      document.getElementById(`${i}`).classList.remove('o');
     }
   }
 

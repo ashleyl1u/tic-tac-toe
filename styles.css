@@ -17,7 +17,10 @@
 
 body{
   background-color: var(--background-color);
+  
 }
+
+
 
 
 button{
@@ -27,6 +30,8 @@ button{
   position: relative;
   padding: 8px 10px;
   opacity: 0.9;
+  border-radius: 5px;
+  cursor: pointer;
  
 
 }
@@ -49,6 +54,8 @@ input{
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 150px;
+  margin-bottom: 150px;
 }
 
 
@@ -58,7 +65,10 @@ input{
   grid-template-rows: 100px 100px 100px;
   height: 300px;
   width: 300px;
-  border: 1px solid var(--board-border-color);
+  border: 2px solid var(--board-border-color);
+  box-shadow: 0 0 5px white;
+  background-color: white;
+  border-radius: 5px;
 }
 
 
@@ -69,6 +79,18 @@ input{
   align-items: center;
   font-size: 70px;
   cursor: pointer;
+  box-shadow: 0 0 15px white;
+  border-radius: 5px;
+  background-color: black;
+  
+}
+
+.x{
+  text-shadow: 0 0 15px rgb(255, 29, 255);
+}
+
+.o{
+  text-shadow: 0 0 15px rgb(29, 229, 255);
 }
 
 
@@ -160,8 +182,11 @@ input{
   display:flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 50px;
   padding: 30px;
+}
+
+.game-message-container #game-messages{
+  text-shadow: 0 0 5px white;
 }
 
 .game-message-container .info{
@@ -174,14 +199,16 @@ input{
   display: none;
   justify-content: center;
   margin-top: 100px;
-  gap: 15px;
+  gap: 30px;
 }
 
 
-#round-over-container button{
-  padding: 5px 10px;
-  border-radius: 5px;
 
-  border: 1px solid black;
-  cursor: pointer;
+
+#player-1-info{
+  text-shadow: 0 0 15px rgb(255, 29, 255);
+}
+
+#player-2-info{
+  text-shadow: 0 0 15px rgb(60, 239, 255);
 }
